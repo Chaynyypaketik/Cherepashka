@@ -19,9 +19,8 @@
 	
 	<input id="num2" />
 	<br>
-
-	<button >Пересчитай</button>
-	<button >Посчитать</button>
+<button >Посчитать</button>
+<button >Посчитать</button>
 
 </body>
 </html>
