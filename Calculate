@@ -1,28 +1,78 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-	<meta charset="utf-8">
-	<title>Калькулятор</title>
-</head>
-<body>
-	
-	<input id="num1" />
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <iomanip>
 
+using namespace std;
 
-	<div id="operator_btns">
-	  <button id="plus" >+</button>
-	  <button id="minus" >-</button>
-	  <button id="times" >x</button>
-	  <button id="divide" >:</button>
-	</div>
+double calculate(double num1, double num2, char op) {
+    switch (op) {
+        case '+':
+            return num1 + num2;
+        case '-':
+            return num1 - num2;
+        case '*':
+            return num1 * num2;
+        case '/':
+            if (num2 == 0) {
+                throw runtime_error("Деление на ноль!");
+            }
+            return num1 / num2;
+        case '^':
+            return pow(num1, num2);
+        default:
+            throw runtime_error("Неизвестная операция!");
+    }
+}
 
-	
-	<input id="num2" />
-	<br>
-<button >Посчитать</button>
-<button >Посчитать</button>
+int main() {
+    double num1, num2, result;
+    char op;
 
-</body>
-</html>
+    cout << "Простой консольный калькулятор" << endl;
 
-// Я сожру твою душу. Лучше почаще оборачивайся =P
+    while (true) {
+        cout << "Введите первое число: ";
+        if (!(cin >> num1)) {
+            cout << "Неверный ввод. Пожалуйста, введите число." << endl;
+            cin.clear(); 
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+
+        cout << "Введите оператор (+, -, *, /, ^): ";
+        if (!(cin >> op)) {
+           cout << "Неверный ввод. Пожалуйста, введите оператор." << endl;
+           cin.clear();
+           cin.ignore(numeric_limits<streamsize>::max(), '\n');
+           continue;
+        }
+
+        cout << "Введите второе число: ";
+        if (!(cin >> num2)) {
+          cout << "Неверный ввод. Пожалуйста, введите число." << endl;
+          cin.clear();
+          cin.ignore(numeric_limits<streamsize>::max(), '\n');
+          continue;
+        }
+
+        try {
+            result = calculate(num1, num2, op);
+           
+             cout << fixed << setprecision(2) << "Результат: " << result << endl;
+        } catch (const runtime_error& error) {
+            cerr << "Ошибка: " << error.what() << endl;
+        }
+
+          char continueCalc;
+        cout << "Хотите продолжить (y/n)? ";
+        cin >> continueCalc;
+        if(continueCalc != 'y'){
+            break;
+        }
+    }
+
+    cout << "Калькулятор завершил работу." << endl;
+
+    return 0;
+}
